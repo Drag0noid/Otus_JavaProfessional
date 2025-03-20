@@ -14,6 +14,8 @@
             <option value="$PROJECT_DIR$/hw01-gradle" />
             <option value="$PROJECT_DIR$/hw03-generics" />
             <option value="$PROJECT_DIR$/hw06-annotations" />
+            <option value="$PROJECT_DIR$/hw08-gc" />
+            <option value="$PROJECT_DIR$/hw16-io" />
           </set>
         </option>
       </GradleProjectSettings>
