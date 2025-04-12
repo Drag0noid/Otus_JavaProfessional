@@ -2,6 +2,10 @@ rootProject.name = "OtusHomework"
 include("hw01-gradle")
 include("hw03-generics")
 include("hw06-annotations")
+include("hw08-gc")
+include("hw15-structuralPatterns")
+include("hw16-io")
+
 
 pluginManagement {
     val jgitver: String by settings
