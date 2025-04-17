@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/hw03-generics" />
             <option value="$PROJECT_DIR$/hw06-annotations" />
             <option value="$PROJECT_DIR$/hw08-gc" />
+            <option value="$PROJECT_DIR$/hw10-byteCode" />
             <option value="$PROJECT_DIR$/hw15-structuralPatterns" />
             <option value="$PROJECT_DIR$/hw16-io" />
           </set>
