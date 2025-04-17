@@ -4,6 +4,7 @@ include("hw03-generics")
 include("hw06-annotations")
 include("hw08-gc")
 include("hw10-byteCode")
+include("hw12-solid")
 include("hw15-structuralPatterns")
 include("hw16-io")
 
@@ -29,3 +30,4 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
+
