@@ -7,6 +7,7 @@ include("hw10-byteCode")
 include("hw12-solid")
 include("hw15-structuralPatterns")
 include("hw16-io")
+include("hw18-jdbc")
 
 
 pluginManagement {

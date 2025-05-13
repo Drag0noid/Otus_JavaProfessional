@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/hw12-solid" />
             <option value="$PROJECT_DIR$/hw15-structuralPatterns" />
             <option value="$PROJECT_DIR$/hw16-io" />
+            <option value="$PROJECT_DIR$/hw18-jdbc" />
           </set>
         </option>
       </GradleProjectSettings>
