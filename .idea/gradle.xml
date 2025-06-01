@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/hw15-structuralPatterns" />
             <option value="$PROJECT_DIR$/hw16-io" />
             <option value="$PROJECT_DIR$/hw18-jdbc" />
+            <option value="$PROJECT_DIR$/hw21-jpql" />
           </set>
         </option>
       </GradleProjectSettings>

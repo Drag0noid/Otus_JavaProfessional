@@ -8,6 +8,7 @@ include("hw12-solid")
 include("hw15-structuralPatterns")
 include("hw16-io")
 include("hw18-jdbc")
+include("hw21-jpql")
 
 
 pluginManagement {
@@ -31,4 +32,3 @@ pluginManagement {
         id("com.diffplug.spotless") version spotless
     }
 }
-
