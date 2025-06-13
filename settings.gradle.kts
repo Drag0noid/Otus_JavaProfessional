@@ -9,6 +9,7 @@ include("hw15-structuralPatterns")
 include("hw16-io")
 include("hw18-jdbc")
 include("hw21-jpql")
+include("hw22-cache")
 
 
 pluginManagement {
