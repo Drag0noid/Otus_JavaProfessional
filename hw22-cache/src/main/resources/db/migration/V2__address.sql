@@ -1,3 +1,5 @@
+create sequence address_SEQ start with 1 increment by 1;
+
 create table address
 (
     id   bigserial not null primary key,
