@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/hw18-jdbc" />
             <option value="$PROJECT_DIR$/hw21-jpql" />
             <option value="$PROJECT_DIR$/hw22-cache" />
+            <option value="$PROJECT_DIR$/hw31-executors" />
           </set>
         </option>
       </GradleProjectSettings>
