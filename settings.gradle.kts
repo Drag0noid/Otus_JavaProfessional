@@ -11,6 +11,7 @@ include("hw18-jdbc")
 include("hw21-jpql")
 include("hw22-cache")
 include("hw31-executors")
+include("hw32-concurrentCollections")
 
 
 pluginManagement {

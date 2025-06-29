@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/hw21-jpql" />
             <option value="$PROJECT_DIR$/hw22-cache" />
             <option value="$PROJECT_DIR$/hw31-executors" />
+            <option value="$PROJECT_DIR$/hw32-concurrentCollections" />
           </set>
         </option>
       </GradleProjectSettings>
