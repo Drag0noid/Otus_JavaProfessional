@@ -13,6 +13,7 @@ include("hw22-cache")
 include("hw25-di")
 include("hw31-executors")
 include("hw32-concurrentCollections")
+include("hw34-multiprocess")
 
 
 pluginManagement {
