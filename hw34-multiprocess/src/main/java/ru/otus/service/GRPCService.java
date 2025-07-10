@@ -2,58 +2,50 @@ package ru.otus.service;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.stub.StreamObserver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.otus.Request;
 import ru.otus.Response;
 import ru.otus.ServiceGrpc;
-
-import java.io.IOException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import io.grpc.stub.StreamObserver;
 
 public class GRPCService {
-    private static final Logger LOG = LoggerFactory.getLogger(GRPCService.class);
-    private static final int PORT = 8080;
 
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Server server = ServerBuilder.forPort(PORT)
-                .addService(new NumberServiceImpl())
+    public static void main(String[] args) throws Exception {
+        Server server = ServerBuilder.forPort(8080)
+                .addService(new ServiceImpl())
                 .build()
                 .start();
 
-        LOG.info("Server started on port {}", PORT);
+        System.out.println("Server started on port 8080");
         server.awaitTermination();
     }
 
-    static class NumberServiceImpl extends ServiceGrpc.ServiceImplBase {
-        private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-
+    private static class ServiceImpl extends ServiceGrpc.ServiceImplBase {
         @Override
         public void getNumbers(Request request, StreamObserver<Response> responseObserver) {
-            int start = request.getFirstValue();
-            int end = request.getLastValue();
+            int from = request.getFirstValue();
+            int to = request.getLastValue();
 
-            LOG.info("Request received: start={} end={}", start, end);
+            new Thread(() -> {
+                try {
+                    for (int i = from + 1; i <= to; i++) {
+                        Response response = Response.newBuilder()
+                                .setCurrentValue(i)
+                                .build();
 
-            final int[] current = {start};
+                        responseObserver.onNext(response);
+                        Thread.sleep(2000);
 
-            scheduler.scheduleAtFixedRate(() -> {
-                if (current[0] <= end) {
-                    Response resp = Response.newBuilder()
-                            .setCurrentValue(current[0])
-                            .build();
-                    responseObserver.onNext(resp);
-                    LOG.info("Sent number: {}", current[0]);
-                    current[0]++;
-                } else {
-                    responseObserver.onCompleted();
-                    LOG.info("Completed sending numbers");
-                    scheduler.shutdown();
+                        if (i == 10) {
+                            break;
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    responseObserver.onError(e);
+                    Thread.currentThread().interrupt();
+                    return;
                 }
-            }, 0, 500, TimeUnit.MILLISECONDS);
+                responseObserver.onCompleted();
+            }).start();
         }
     }
 }

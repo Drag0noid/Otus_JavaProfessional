@@ -5,71 +5,51 @@ import io.grpc.ManagedChannelBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.Request;
-import ru.otus.Response;
 import ru.otus.ServiceGrpc;
 
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
 public class GRPCClient {
-    private static final Logger LOG = LoggerFactory.getLogger(GRPCClient.class);
-    private static final String HOST = "localhost";
-    private static final int PORT = 8080;
+    private static final Logger log = LoggerFactory.getLogger(GRPCClient.class);
 
-    public static void main(String[] args) throws InterruptedException {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(HOST, PORT)
+    public static void main(String[] args) {
+        log.info("numbers Client is starting...");
+
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8080)
                 .usePlaintext()
                 .build();
 
-        ServiceGrpc.NumbersServiceStub asyncStub = ServiceGrpc.newStub(channel);
-
-        CountDownLatch latch = new CountDownLatch(1);
-        AccumulatorObserver observer = new AccumulatorObserver(latch);
+        var stub = ServiceGrpc.newStub(channel);
+        var responseObserver = new ClientObserver();
 
         Request request = Request.newBuilder()
-                .setFirstValue(1)
+                .setFirstValue(0)
                 .setLastValue(30)
                 .build();
 
-        asyncStub.getNumbers(request, observer);
+        stub.getNumbers(request, responseObserver);
 
-        LOG.info("Waiting for server to send all numbers...");
-        latch.await(35, TimeUnit.SECONDS);
+        long currentValue = 0;
+        int lastUsedServerValue = -1;
 
-        LOG.info("Final accumulated value: {}", observer.getAccumulatedSum());
+        while (!responseObserver.isCompleted()) {
+            try {
+                int serverVal = responseObserver.getLastValue();
+
+                if (serverVal != -1 && serverVal != lastUsedServerValue) {
+                    currentValue += serverVal + 1;
+                    lastUsedServerValue = serverVal;
+                } else {
+                    currentValue += 1;
+                }
+
+                log.info("currentValue:{}", currentValue);
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                log.error("interrupted", e);
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
 
         channel.shutdown();
-    }
-
-    private static class AccumulatorObserver implements io.grpc.stub.StreamObserver<Response> {
-        private final CountDownLatch latch;
-        private int accumulatedSum = 0;
-
-        public AccumulatorObserver(CountDownLatch latch) {
-            this.latch = latch;
-        }
-
-        @Override
-        public void onNext(Response response) {
-            int val = response.getCurrentValue();
-            accumulatedSum += val * 2;
-            LOG.info("Received: {}, accumulatedSum: {}", val, accumulatedSum);
-        }
-
-        @Override
-        public void onError(Throwable t) {
-            LOG.error("Error from server", t);
-            latch.countDown();
-        }
-
-        @Override
-        public void onCompleted() {
-            LOG.info("Stream completed");
-            latch.countDown();
-        }
-
-        public int getAccumulatedSum() {
-            return accumulatedSum;
-        }
     }
 }
