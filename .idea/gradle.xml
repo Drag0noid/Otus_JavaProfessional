@@ -25,6 +25,7 @@
             <option value="$PROJECT_DIR$/hw25-di" />
             <option value="$PROJECT_DIR$/hw31-executors" />
             <option value="$PROJECT_DIR$/hw32-concurrentCollections" />
+            <option value="$PROJECT_DIR$/hw34-multiprocess" />
           </set>
         </option>
       </GradleProjectSettings>
