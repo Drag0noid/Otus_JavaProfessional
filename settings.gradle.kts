@@ -14,6 +14,7 @@ include("hw25-di")
 include("hw31-executors")
 include("hw32-concurrentCollections")
 include("hw34-multiprocess")
+include("course-project")
 
 
 pluginManagement {

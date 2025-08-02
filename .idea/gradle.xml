@@ -11,6 +11,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/course-project" />
             <option value="$PROJECT_DIR$/hw01-gradle" />
             <option value="$PROJECT_DIR$/hw03-generics" />
             <option value="$PROJECT_DIR$/hw06-annotations" />

@@ -21,7 +21,6 @@ idea {
 }
 
 allprojects {
-    group = "tomnolane.otus"
 
     repositories {
         mavenLocal()
